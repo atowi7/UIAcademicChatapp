@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "935317509923",
+    "project_id": "academicchatapp-c1268",
+    "storage_bucket": "academicchatapp-c1268.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935317509923:android:bc172accb5d9286f0b1e96",
+        "android_client_info": {
+          "package_name": "com.example.academicchatapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935317509923-gir6ou8orfr6tgna5fmdeglvg95tg9ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.academicchatapplication",
+            "certificate_hash": "70e0e0f6b81050d056f27c137bef63ce8a9ae4fc"
+          }
+        },
+        {
+          "client_id": "935317509923-lfun9u69403qvcb5ejrrfknua1rsa96e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM0HlgVq2XrLCigfX3pkk7MZ_Gi3yfAq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935317509923-lfun9u69403qvcb5ejrrfknua1rsa96e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
