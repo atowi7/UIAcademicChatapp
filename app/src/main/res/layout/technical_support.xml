@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/iupg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn"
+        android:padding="10dp"
+        android:text="Write here"
+        android:textSize="50dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/edittxt_ts"
+        android:layout_width="357dp"
+        android:layout_height="97dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:textSize="20dp"
+        android:hint="Type here"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:background="@drawable/edtext"
+        android:padding="20dp" />
+
+    <Button
+        android:layout_width="208dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:onClick="send"
+        android:text="SEND"
+        android:textSize="35dp"
+        android:background="@drawable/btn" />
+
+
+</LinearLayout>

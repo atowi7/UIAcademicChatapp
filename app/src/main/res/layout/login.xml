@@ -4,101 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/iupg"
     tools:context=".Login">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView2"
-        android:layout_width="213dp"
-        android:layout_height="198dp"
-
-        android:background="@drawable/img"
-        android:src="@drawable/splash_icon1"
+        android:layout_width="247dp"
+        android:layout_height="215dp"
+        android:src="@mipmap/useridentity_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.05" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="190dp"
-        android:layout_height="53dp"
-        android:background="@drawable/text"
-        android:gravity="center"
-        android:text="Login"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351" />
+        app:layout_constraintVertical_bias="0.584"
+        tools:layout_editor_absoluteX="0dp">
 
-    <EditText
-        android:id="@+id/IDEdit"
-        android:layout_width="366dp"
-        android:layout_height="64dp"
-        android:background="@drawable/edtext"
-        android:ems="10"
-        android:gravity="center_vertical"
-        android:hint="ID"
-        android:drawableLeft="@drawable/useridentity_icon_foreground"
-        android:inputType="textPersonName"
-        android:textColorHint="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.542" />
+        <EditText
+            android:id="@+id/IDEdit"
+            android:layout_width="366dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edtext"
+            android:drawableLeft="@drawable/useridentity_icon_foreground"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="ID"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/black"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="174dp"
-        android:layout_height="53dp"
-        android:background="@drawable/btn"
-        android:onClick="login"
-        android:text="Login"
-        android:textSize="24sp"
-        app:backgroundTint="#006699"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.715" />
-
-    <RadioGroup
-        android:id="@+id/user_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803">
-
-        <RadioButton
-            android:id="@+id/advisor_rb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="advisor"
+        <Button
+            android:id="@+id/button"
+            android:layout_width="174dp"
+            android:layout_height="53dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn"
+            android:onClick="login"
+            android:text="LOGIN"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-             />
+            android:textSize="24sp"
+            app:backgroundTint="#006699" />
 
-        <RadioButton
-            android:id="@+id/student_rb"
-            android:layout_width="91dp"
+        <RadioGroup
+            android:id="@+id/user_type"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="student"
-            android:textColor="@color/white"/>
-    </RadioGroup>
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/advisor_rb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="advisor"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/student_rb"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:text="student"
+                android:textColor="@color/white" />
+        </RadioGroup>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

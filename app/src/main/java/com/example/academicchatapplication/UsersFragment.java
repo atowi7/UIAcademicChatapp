@@ -80,8 +80,7 @@ public class UsersFragment extends Fragment {
         dfgroup.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapparent : snapshot.getChildren()) {
-                    for (DataSnapshot snapchild : snapparent.getChildren()) {
+                for (DataSnapshot snapchild : snapshot.getChildren()) {
 
                         DatabaseReference dfuser = FirebaseDatabase.getInstance().getReference("user");
 
@@ -117,7 +116,7 @@ public class UsersFragment extends Fragment {
 
                             }
                         });
-                    }
+
                 }
             }
 
@@ -137,8 +136,7 @@ public class UsersFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapparent : snapshot.getChildren()) {
                     for (DataSnapshot snapchild : snapparent.getChildren()) {
-                        for (DataSnapshot snapchildchild : snapchild.getChildren()) {
-                            if (Login.loginid.equals(snapchildchild.getKey())) {
+                            if (Login.loginid.equals(snapchild.getKey())) {
                                 DatabaseReference dfuser = FirebaseDatabase.getInstance().getReference("user");
 
                                 dfuser.addValueEventListener(new ValueEventListener() {
@@ -166,7 +164,7 @@ public class UsersFragment extends Fragment {
                                 });
 
                             }
-                        }
+
                     }
                 }
             }

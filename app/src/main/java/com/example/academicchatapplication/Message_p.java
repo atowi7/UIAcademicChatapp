@@ -103,7 +103,7 @@ public class Message_p extends AppCompatActivity {
 
                     username.setText(user.getUsername());
                     if (user.getUserimage().equals("default")) {
-                        userimage.setImageResource(R.drawable.splash_icon1);
+                        userimage.setImageResource(R.drawable.person_icon_foreground);
                     }else{
                         Picasso.get().load(user.getUserimage()).into(userimage);
                     }
@@ -145,11 +145,17 @@ public class Message_p extends AppCompatActivity {
                     msgtxt = mEdit.getText().toString();
                     if(chatstatus.equals("one")){
                         DatabaseReference df2 = FirebaseDatabase.getInstance().getReference();
+
+                        String did = UUID.randomUUID().toString();
+
                         HashMap<String, String> minfo = new HashMap<>();
                         minfo.put("messagetxt", msgtxt);
-                        minfo.put("messageimg", "empty");
+                        minfo.put("messageimg", "no_sora");
                         minfo.put("status", chatstatus);
                         minfo.put("chatallid", "");
+                        minfo.put("isseen", "false");
+                        minfo.put("did", did);
+                        minfo.put("isdeleted", "false");
                         minfo.put("sender", Login.loginid);
                         minfo.put("receiver", userid);
 
@@ -169,19 +175,20 @@ public class Message_p extends AppCompatActivity {
                         c=true;
                         String chatallid = UUID.randomUUID().toString(); //A unique id to use it in group messages
 
-                        //Get the specific students according to them advisor so we can send the messages to them
+                        //Get the specific students according to their advisor so we can send the messages to them
                         DatabaseReference dfgroup = FirebaseDatabase.getInstance().getReference("group").child(Login.loginid);
                         dfgroup.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                for (DataSnapshot snapparent : snapshot.getChildren()) {
-                                    for (DataSnapshot snapchild : snapparent.getChildren()) {
+                                    for (DataSnapshot snapchild : snapshot.getChildren()) {
                                         std = snapchild.getKey();
                                         DatabaseReference df = FirebaseDatabase.getInstance().getReference();
+
+                                        String did = UUID.randomUUID().toString();
+
                                         HashMap<String, String> minfo = new HashMap<>();
                                         minfo.put("messagetxt",msgtxt);
-                                        minfo.put("messageimg", "empty");
+                                        minfo.put("messageimg", "no_sora");
                                         minfo.put("status", chatstatus);
                                         if(c==true){
                                             minfo.put("chatallid",chatallid );
@@ -190,6 +197,9 @@ public class Message_p extends AppCompatActivity {
                                             minfo.put("chatallid","null" );
                                         }
 
+                                        minfo.put("isseen", "false");
+                                        minfo.put("did", did);
+                                        minfo.put("isdeleted", "false");
                                         minfo.put("sender", Login.loginid);
                                         minfo.put("receiver", std);
 
@@ -205,7 +215,7 @@ public class Message_p extends AppCompatActivity {
                                         DatabaseReference df4 = FirebaseDatabase.getInstance().getReference("Notification").child(std).child(Login.loginid);
                                         df4.child("id").setValue(Login.loginid);
                                     }
-                                }
+
                             }
 
                             @Override
@@ -256,10 +266,16 @@ public class Message_p extends AppCompatActivity {
                         if(chatstatus.equals("one")){
 
                             DatabaseReference df2 = FirebaseDatabase.getInstance().getReference();
+
+                            String did = UUID.randomUUID().toString();
+
                             HashMap<String, String> minfo = new HashMap<>();
-                            minfo.put("messagetxt", "empty");
+                            minfo.put("messagetxt", "no_nas");
                             minfo.put("messageimg", uri.toString());
                             minfo.put("status", chatstatus);
+                            minfo.put("isseen", "false");
+                            minfo.put("did", did);
+                            minfo.put("isdeleted", "false");
                             minfo.put("sender", Login.loginid);
                             minfo.put("receiver", userid);
 
@@ -276,19 +292,19 @@ public class Message_p extends AppCompatActivity {
 
                         }else if(chatstatus.equals("all")){
                             c=true;
+                            String did = UUID.randomUUID().toString();
                             String chatallid = UUID.randomUUID().toString();
 
                             DatabaseReference dfgroup = FirebaseDatabase.getInstance().getReference("group").child(Login.loginid);
                             dfgroup.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                    for (DataSnapshot snapparent : snapshot.getChildren()) {
-                                        for (DataSnapshot snapchild : snapparent.getChildren()) {
+                                        for (DataSnapshot snapchild : snapshot.getChildren()) {
                                             DatabaseReference df = FirebaseDatabase.getInstance().getReference();
                                              std = snapchild.getKey();
+
                                             HashMap<String, String> minfo = new HashMap<>();
-                                            minfo.put("messagetxt", "empty");
+                                            minfo.put("messagetxt", "no_nas");
                                             minfo.put("messageimg", uri.toString());
                                             minfo.put("status", chatstatus);
                                             if(c==true){
@@ -298,6 +314,9 @@ public class Message_p extends AppCompatActivity {
                                                 minfo.put("chatallid","null" );
                                             }
 
+                                            minfo.put("isseen", "false");
+                                            minfo.put("did", did);
+                                            minfo.put("isdeleted", "false");
                                             minfo.put("sender", Login.loginid);
                                             minfo.put("receiver", std);
 
@@ -312,7 +331,7 @@ public class Message_p extends AppCompatActivity {
                                             DatabaseReference df4 = FirebaseDatabase.getInstance().getReference("Notification").child(std).child(Login.loginid);
                                             df4.child("id").setValue(Login.loginid);
                                         }
-                                    }
+
                                 }
 
                                 @Override
@@ -375,6 +394,23 @@ public class Message_p extends AppCompatActivity {
 
                 }
             });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        openHome();
+    }
+
+    public void openHome() {
+        // open home page
+        Intent intent = new Intent(this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        finish();
+
     }
 
 }

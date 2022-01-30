@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -31,13 +32,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Home extends AppCompatActivity {
-
+    public static boolean r = false;
 
     @Override
     protected void onStart() {
         super.onStart();
         Message_p.active=false;
         startService(new Intent(this,Service.class));
+
+        /*String notify = getIntent().getStringExtra("notify");
+        if(notify!=null){
+            //remove notification user id
+            Toast.makeText(getApplicationContext(), "notify is deleted", Toast.LENGTH_SHORT).show();
+            removeNotificationUserid();
+        }else{
+            Toast.makeText(getApplicationContext(), "notify null", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
 
@@ -48,39 +58,41 @@ public class Home extends AppCompatActivity {
 
         setOn();
 
-             ViewPager viewPager = (ViewPager) findViewById(R.id.vpager);
-             TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-             ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
+             //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.vpager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
 
         // access database to get the user type to show the specific information for the specific type
         DatabaseReference df_usertype = FirebaseDatabase.getInstance().getReference("user").child(Login.loginid).child("usertype");
 
         df_usertype.addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                     String type = snapshot.getValue(String.class);
-                         if (type.equals("advisor")) {
-                             viewpagerAdapter.addFragments(new UsersFragment(), "Student");
-                             viewpagerAdapter.addFragments(new ChatsFragment(), "Chat");
-                             viewpagerAdapter.addFragments(new ChatForAllFragment(), "ForAll");
-                             viewpagerAdapter.addFragments(new ProfileFragment(), "Profile");
-                         } else if (type.equals("student")) {
-                             viewpagerAdapter.addFragments(new UsersFragment(), "Myadvisor");
-                             viewpagerAdapter.addFragments(new ChatsFragment(), "Chat");
-                             viewpagerAdapter.addFragments(new ProfileFragment(), "Profile");
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String type = snapshot.getValue(String.class);
+                if (type.equals("advisor")) {
+                    viewpagerAdapter.addFragments(new UsersFragment(), "Student");
+                    //viewpagerAdapter.addFragments(new ChatsFragment(), "Chat");
+                    viewpagerAdapter.addFragments(new ChatForAllFragment(), "ForAll");
+                    viewpagerAdapter.addFragments(new ProfileFragment(), "Profile");
+                } else if (type.equals("student")) {
+                    viewpagerAdapter.addFragments(new UsersFragment(), "Myadvisor");
+                   // viewpagerAdapter.addFragments(new ChatsFragment(), "Chat");
+                    viewpagerAdapter.addFragments(new ProfileFragment(), "Profile");
 
-                         }
+                }
 
-                         viewPager.setAdapter(viewpagerAdapter);
+                viewPager.setAdapter(viewpagerAdapter);
 
-                         tabLayout.setupWithViewPager(viewPager);
-                  }
+                tabLayout.setupWithViewPager(viewPager);
+            }
 
-                 @Override
-                 public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                 }
-             });
+            }
+        });
 
         // access database to get the user name
         DatabaseReference df_username = FirebaseDatabase.getInstance().getReference("user").child(Login.loginid).child("username");
@@ -97,10 +109,12 @@ public class Home extends AppCompatActivity {
 
             }
         });
+    }
 
-
+    public void openViewPager(){
 
     }
+
 
 
     @Override
@@ -113,10 +127,12 @@ public class Home extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            // logout from the home activity if the user clicks the logout button
-            case R.id.logout:
+            case R.id.support:
+                Intent intent = new Intent(this, TechnicalSupport.class);
+                startActivity(intent);
+                break;
+            case R.id.logout :// logout from the home activity if the user clicks the logout button
 
-                        Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_SHORT).show();
                         Intent mainIntent = new Intent(this, Login.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -128,12 +144,20 @@ public class Home extends AppCompatActivity {
 
                        removeUserLogin();
 
+                       cancelNotification();
+
                        finish();
 
                 return true;
 
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     class ViewpagerAdapter extends FragmentPagerAdapter {
@@ -197,5 +221,23 @@ public class Home extends AppCompatActivity {
         editor.apply();
     }
 
+    public void removeNotificationUserid(){
+        DatabaseReference  df = FirebaseDatabase.getInstance().getReference("Notification").child(Login.loginid);
+        df.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+              snapshot.getRef().removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void cancelNotification(){
+        NotificationManagerCompat.from(this).cancelAll();
+    }
 
 }

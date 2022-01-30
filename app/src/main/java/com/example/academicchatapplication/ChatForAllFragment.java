@@ -25,6 +25,9 @@ import java.util.List;
 public class ChatForAllFragment extends Fragment {
     ImageView imageView;
     TextView textView;
+    TextView lastmsgtxt;
+
+    public String lastmsg="";
     public ChatForAllFragment() {
         // Required empty public constructor
     }
@@ -43,8 +46,9 @@ public class ChatForAllFragment extends Fragment {
 
         imageView = view.findViewById(R.id.alluseritem_image);
         textView = view.findViewById(R.id.alluseritem_name);
+        lastmsgtxt = view.findViewById(R.id.alluseritem_msgtxt);
 
-        imageView.setImageResource(R.drawable.splash_icon1);
+        imageView.setImageResource(R.drawable.user_group_icon_foreground);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +58,48 @@ public class ChatForAllFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+
+        setLastMsg(lastmsgtxt);
         return view;
     }
 
+    public void setLastMsg(TextView lastmsgtxt){
+        lastmsg="default";
+        DatabaseReference df = FirebaseDatabase.getInstance().getReference("Chat");
+
+        df.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Chat chat = dataSnapshot.getValue(Chat.class);
+                    if((chat.getSender().equals(Login.loginid)||chat.getReceiver().equals(Login.loginid))&& chat.getStatus().equals("all")){
+                        if(chat.getMessagetxt().equals("no_nas")){
+                            lastmsg="IMAGE";
+                        }else {
+                            if(chat.getMessagetxt().length()>10){
+                                lastmsg=chat.getMessagetxt().substring(0,10)+"...";
+                            }else{
+                                lastmsg=chat.getMessagetxt();
+                            }
+
+                        }
+                    }
+                }
+
+                if(lastmsg.equals("default")){
+                    lastmsgtxt.setText("no message");
+                }else{
+                    lastmsgtxt.setText(lastmsg);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 }

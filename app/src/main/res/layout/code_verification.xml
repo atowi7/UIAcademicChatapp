@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/iupg"
     tools:context=".CodeVerification">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="213dp"
-        android:layout_height="198dp"
-
+        android:layout_width="247dp"
+        android:layout_height="215dp"
         android:background="@drawable/img"
-        android:src="@drawable/splash_icon1"
+        android:src="@mipmap/useridentity_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -22,13 +22,12 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="257dp"
-        android:layout_height="64dp"
-        android:background="@drawable/text"
+        android:layout_width="366dp"
+        android:layout_height="61dp"
         android:gravity="center"
-        android:text="Enter your CODE"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:text="ENTER YOUR CODE"
+        android:textColor="#006699"
+        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -38,15 +37,15 @@
 
     <EditText
         android:id="@+id/CODEEDIT"
-        android:layout_width="375dp"
-        android:layout_height="51dp"
+        android:layout_width="366dp"
+        android:layout_height="64dp"
         android:background="@drawable/edtext"
         android:drawableLeft="@drawable/useridentity_icon_foreground"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="CODE"
         android:inputType="textPersonName"
-        android:textColorHint="#FFFFFF"
+        android:textColorHint="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

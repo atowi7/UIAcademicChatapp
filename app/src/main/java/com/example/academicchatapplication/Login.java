@@ -60,37 +60,7 @@ public class Login extends AppCompatActivity {
 
         Message_p.active=false;
 
-        //Login to the system if the user is not logged out
-        sharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE);
-        String id = sharedPreferences.getString("loginid","default");
 
-        if(!id.equals("default")){
-            Login.loginid=id;
-
-            openHome();
-        }
-
-/*try {
-    df = FirebaseDatabase.getInstance().getReference("user").child(Login.loginid).child("userstatus");
-    df.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            String status = snapshot.getValue(String.class);
-            if (status.equals("true")) {
-                openHome();
-            }
-
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    });
-
-}catch (Exception e){
-    Toast.makeText(getApplicationContext(), "ERROR "+e.getMessage(), Toast.LENGTH_SHORT).show();
-}*/
     }
 
     @Override
@@ -105,45 +75,28 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View view) {
-        int id = radioGroup.getCheckedRadioButtonId();
-
         String userid = eduserid.getText().toString();
-        Login.loginid = userid;
-
-        //select user type by the user
-        if (id == -1) {
-            Toast.makeText(getApplicationContext(), "Please choose the type", Toast.LENGTH_SHORT).show();
-        } else {
-            rbusertype = (RadioButton) findViewById(id);
-
-            //get user type as a doctor or a a student
-            Login.usertype = rbusertype.getText().toString();
-        }
 
         if (userid.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Filled is empty", Toast.LENGTH_SHORT).show();
-
         }else {
-            checkUserType();
+            Login.loginid = userid;
+
+            checkIfUserExist();
+
         }
     }
 
-    public void checkUserType(){
-        //get user type from database by his id
-        df2 = FirebaseDatabase.getInstance().getReference("user").child(Login.loginid).child("usertype");
-        df2.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void checkIfUserExist(){
+        df= FirebaseDatabase.getInstance().getReference("user").child(Login.loginid);
+        df.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                String type = snapshot2.getValue(String.class);
-
-                if (!snapshot2.exists()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
                     Toast.makeText(getApplicationContext(), "ID not found", Toast.LENGTH_SHORT).show();
-                } else if (Login.usertype.equals(type)) {
-                    getUerEmail();
-                } else if(!Login.usertype.equals(type)){
-                    Toast.makeText(getApplicationContext(), "Please choose different type", Toast.LENGTH_SHORT).show();
+                }else{
+                    checkUserType();
                 }
-
             }
 
             @Override
@@ -151,7 +104,40 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void checkUserType(){
+        //select user type by the user
+        int id = radioGroup.getCheckedRadioButtonId();
+
+        if (id == -1) {
+            Toast.makeText(getApplicationContext(), "Please choose the type", Toast.LENGTH_SHORT).show();
+        } else {
+            rbusertype = (RadioButton) findViewById(id);
+
+            //get user type as a doctor or a a student
+            Login.usertype = rbusertype.getText().toString();
+
+            //get user type from database by his id
+            df2 = FirebaseDatabase.getInstance().getReference("user").child(Login.loginid).child("usertype");
+            df2.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String type = snapshot.getValue(String.class);
+
+                    if (Login.usertype.equals(type)) {
+                        getUerEmail();
+                    } else if(!Login.usertype.equals(type)){
+                        Toast.makeText(getApplicationContext(), "Please choose different type", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     public void getUerEmail(){
@@ -180,8 +166,8 @@ public class Login extends AppCompatActivity {
         String code = "" + (int) (Math.random() * 10000); // generate random number for the verification code
 
             // set the code number to the user code attribute
-            DatabaseReference df2 = FirebaseDatabase.getInstance().getReference("user").child(userid);
-            df2.child("usercode").setValue(code);
+            DatabaseReference df = FirebaseDatabase.getInstance().getReference("user").child(userid);
+            df.child("usercode").setValue(code);
 
             // set the attributes for the email sending process
             Properties properties = new Properties();
@@ -262,15 +248,6 @@ public class Login extends AppCompatActivity {
             finish();
     }
 
-    public void openHome() {
-        // method for open the home page
-        Intent intent = new Intent(this, Home.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-
-        finish();
-    }
 
     public void saveUserLogin(){
         //save user login if he login for the first time

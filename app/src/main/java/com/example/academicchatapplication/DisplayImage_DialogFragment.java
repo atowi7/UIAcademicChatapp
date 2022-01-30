@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.ortiz.touchview.TouchImageView;
 import com.squareup.picasso.Picasso;
 
 
@@ -23,10 +24,10 @@ public class DisplayImage_DialogFragment extends DialogFragment {
          super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_displayimage,container,false);
-        ImageView imageView = v.findViewById(R.id.showingImage);
+        TouchImageView imageView = v.findViewById(R.id.showingImage);
 
         // Library for displaying the image from the url
-        Picasso.get().load(getImgurl()).resize(1000,1000).into(imageView);
+        Picasso.get().load(getImgurl()).into(imageView);
 
         return v;
     }

@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
     ImageView userimage;
-    TextView username;
+    TextView userid,username,useremail;
 
     DatabaseReference df;
 
@@ -60,7 +60,9 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         userimage = view.findViewById(R.id.profile_userimage);
+        userid = view.findViewById(R.id.profile_userid);
         username = view.findViewById(R.id.profile_username);
+        useremail = view.findViewById(R.id.profile_useremail);
 
         storageRef = FirebaseStorage.getInstance().getReference();
         // get user image from the database
@@ -71,10 +73,12 @@ public class ProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
 
+                userid.setText(user.getUserid());
                 username.setText(user.getUsername());
+                useremail.setText(user.getUseremail());
 
                 if (user.getUserimage().equals("default")) {
-                    userimage.setImageResource(R.drawable.splash_icon1);
+                    userimage.setImageResource(R.drawable.person_icon_foreground);
                 }else{
                     Picasso.get().load(user.getUserimage()).into(userimage);
                 }

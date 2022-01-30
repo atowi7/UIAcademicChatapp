@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,71 +7,79 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Message_p">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_m"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="92dp"
-        android:background="#006699"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_m"
+            android:layout_width="match_parent"
+            android:layout_height="92dp"
+            android:background="#006699"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+           >
 
-        <ImageView
-            android:id="@+id/user_m_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:srcCompat="@drawable/splash_icon1" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_m_image"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="0.5dp"
+                android:src="@drawable/person_icon_foreground" />
 
-        <TextView
-            android:id="@+id/user_m_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            tools:layout_editor_absoluteX="127dp"
-            tools:layout_editor_absoluteY="44dp" />
+            <TextView
+                android:id="@+id/user_m_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="20dp"
+                tools:layout_editor_absoluteX="127dp"
+                tools:layout_editor_absoluteY="44dp" />
 
-    </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleview_msg"
-        android:layout_width="match_parent"
-        android:layout_height="560dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_m" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleview_msg"
+            android:layout_width="match_parent"
+            android:layout_height="560dp"
+            android:background="@drawable/msgdiv1" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        app:layout_constraintTop_toBottomOf="@+id/recycleview_msg">
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:background="@drawable/msgdiv2">
 
-        <EditText
-            android:id="@+id/msend_editt"
-            android:layout_width="295dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="51dp"
-            android:ems="10"
-            android:hint="Type a message"
-            android:inputType="textPersonName" />
-        <ImageView
-            android:id="@+id/share_btn"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/outline_attachment_black_24" />
-        <ImageView
-            android:id="@+id/send_btn"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            app:srcCompat="@android:drawable/ic_menu_send" />
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/msend_editt"
+                android:layout_width="295dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="51dp"
+                android:ems="10"
+                android:hint="Type a message"
+                android:inputType="textPersonName" />
+            <ImageView
+                android:id="@+id/share_btn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/outline_attachment_black_24" />
+            <ImageView
+                android:id="@+id/send_btn"
+                android:layout_width="54dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@android:drawable/ic_menu_send" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
